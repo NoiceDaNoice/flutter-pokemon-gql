@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pokemon_gql/common/theme.dart';
-import 'package:flutter_pokemon_gql/features/detail_screen/data/network/graphql/api.dart';
 import 'package:flutter_pokemon_gql/features/detail_screen/view/cubit/pokemon_detail_cubit.dart';
 import 'package:flutter_pokemon_gql/features/detail_screen/view/custom_widget/custom_detail_widget.dart';
 import 'package:flutter_pokemon_gql/features/main_screen/domain/entity/pokemon_entity.dart';

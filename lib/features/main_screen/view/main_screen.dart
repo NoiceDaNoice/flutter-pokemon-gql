@@ -36,7 +36,37 @@ class _MainPageState extends State<MainPage> {
     Widget listPokemon() {
       return BlocProvider(
         create: (context) => _pokemonCubit..getAllPokemon(),
-        child: BlocBuilder<PokemonCubit, PokemonState>(
+        child: BlocConsumer<PokemonCubit, PokemonState>(
+          listener: (context, state) {
+            if (state is PokemonFailed) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: const Text('Failed to load pokemon.'),
+                  action: SnackBarAction(
+                    label: 'Refresh',
+                    onPressed: () {
+                      _pokemonCubit.getAllPokemon();
+                    },
+                  ),
+                ),
+              );
+              // return Center(
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children: [
+              //       const Text('Failed to load pokemon.'),
+              //       TextButton(
+              //         onPressed: () => _pokemonCubit.getAllPokemon(),
+              //         child: const Text(
+              //           'Retry',
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // );
+            }
+          },
           builder: (context, state) {
             if (state is PokemonLoading) {
               if (pokemonData.isEmpty) {
@@ -44,22 +74,6 @@ class _MainPageState extends State<MainPage> {
                   child: CircularProgressIndicator(),
                 );
               }
-            } else if (state is PokemonFailed) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text('Failed to load pokemon.'),
-                    TextButton(
-                      onPressed: () => _pokemonCubit.getAllPokemon(),
-                      child: const Text(
-                        'Retry',
-                      ),
-                    ),
-                  ],
-                ),
-              );
             }
             if (state is PokemonSuccess) {
               pokemonData = state.pokemons;
@@ -91,7 +105,7 @@ class _MainPageState extends State<MainPage> {
                       ),
                     );
                   } else {
-                    const Center();
+                    return const Center();
                   }
                 }
               },
