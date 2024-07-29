@@ -15,6 +15,7 @@ String pokemonModelToJson(PokemonDetailEntity data) =>
 class PokemonDetailEntity extends Equatable {
   final String? id;
   final String? number;
+  final String? name;
   final WeightAttributeEntity? weight;
   final WeightAttributeEntity? height;
   final String? classification;
@@ -32,6 +33,7 @@ class PokemonDetailEntity extends Equatable {
   const PokemonDetailEntity({
     this.id,
     this.number,
+    this.name,
     this.weight,
     this.height,
     this.classification,
@@ -51,6 +53,7 @@ class PokemonDetailEntity extends Equatable {
       PokemonDetailEntity(
         id: json["id"],
         number: json["number"],
+        name: json["name"],
         weight: WeightAttributeEntity.fromJson(json["weight"]),
         height: WeightAttributeEntity.fromJson(json["height"]),
         classification: json["classification"],
@@ -61,11 +64,11 @@ class PokemonDetailEntity extends Equatable {
         fleeRate: json["fleeRate"].toDouble(),
         maxCp: json["maxCP"],
         evolutions: json["evolutions"] == null
-            ? null
+            ? []
             : List<EvolutionEntity>.from(
                 json["evolutions"].map((x) => EvolutionEntity.fromJson(x))),
         evolutionRequirements: json["evolutionRequirements"] == null
-            ? null
+            ? const EvolutionRequirementEntity(amount: 0,name: '')
             : EvolutionRequirementEntity.fromJson(
                 json["evolutionRequirements"]),
         maxHp: json["maxHP"],
@@ -75,23 +78,24 @@ class PokemonDetailEntity extends Equatable {
   Map<String, dynamic> toJson() => {
         "id": id,
         "number": number,
+        "name": name,
         "weight": weight?.toJson(),
         "height": height?.toJson(),
         "classification": classification,
         "types":
-            types != null ? List<dynamic>.from(types!.map((x) => x)) : null,
+            types != null ? List<dynamic>.from(types!.map((x) => x)) : [],
         "resistant": resistant != null
             ? List<dynamic>.from(resistant!.map((x) => x))
-            : null,
+            : [],
         "attacks": attacks?.toJson(),
         "weaknesses": weaknesses != null
             ? List<dynamic>.from(weaknesses!.map((x) => x))
-            : null,
+            : [],
         "fleeRate": fleeRate,
         "maxCP": maxCp,
         "evolutions": evolutions != null
             ? List<dynamic>.from(evolutions!.map((x) => x.toJson()))
-            : null,
+            : [],
         "evolutionRequirements": evolutionRequirements?.toJson(),
         "maxHP": maxHp,
         "image": image,
@@ -101,6 +105,7 @@ class PokemonDetailEntity extends Equatable {
   List<Object?> get props => [
         id,
         number,
+        name,
         weight,
         height,
         classification,

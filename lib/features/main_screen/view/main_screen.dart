@@ -21,12 +21,10 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     controller.addListener(() {
       if (controller.position.atEdge) {
-        print('berhasil');
-        print(pokemonData.length);
         bool isTop = controller.position.pixels == 0;
         if (isTop) {
         } else {
-          if (hasReachMax == false) _pokemonCubit.getAllPokemon();
+          if (!hasReachMax) _pokemonCubit.getAllPokemon();
         }
       }
     });
@@ -40,13 +38,19 @@ class _MainPageState extends State<MainPage> {
         create: (context) => _pokemonCubit..getAllPokemon(),
         child: BlocBuilder<PokemonCubit, PokemonState>(
           builder: (context, state) {
-            if (state is PokemonFailed) {
+            if (state is PokemonLoading) {
+              if (pokemonData.isEmpty) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            } else if (state is PokemonFailed) {
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text('Failed to load species.'),
+                    const Text('Failed to load pokemon.'),
                     TextButton(
                       onPressed: () => _pokemonCubit.getAllPokemon(),
                       child: const Text(
@@ -59,7 +63,6 @@ class _MainPageState extends State<MainPage> {
             }
             if (state is PokemonSuccess) {
               pokemonData = state.pokemons;
-              print(state.max);
               hasReachMax = state.max;
             }
             return ListView.builder(
@@ -78,14 +81,18 @@ class _MainPageState extends State<MainPage> {
                     },
                   );
                 } else {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: defaultPadding),
-                    child: Center(
-                      child: (hasReachMax == false)
-                          ? const CircularProgressIndicator()
-                          : const Text('No more pokemon :('),
-                    ),
-                  );
+                  if (pokemonData.isNotEmpty) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: defaultPadding),
+                      child: Center(
+                        child: (hasReachMax == false)
+                            ? const CircularProgressIndicator()
+                            : const Text('No more pokemon :('),
+                      ),
+                    );
+                  } else {
+                    const Center();
+                  }
                 }
               },
             );

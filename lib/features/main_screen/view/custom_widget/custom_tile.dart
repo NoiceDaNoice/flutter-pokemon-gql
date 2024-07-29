@@ -6,11 +6,8 @@ import '../../../../common/theme.dart';
 class CustomTile extends StatelessWidget {
   final PokemonEntity pokemonEntity;
   final Function() function;
-  const CustomTile({
-    super.key,
-    required this.pokemonEntity,
-    required this.function
-  });
+  const CustomTile(
+      {super.key, required this.pokemonEntity, required this.function});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +15,9 @@ class CustomTile extends StatelessWidget {
       padding: const EdgeInsets.all(defaultPadding),
       child: Material(
         child: Ink(
-          decoration: const BoxDecoration(
-            color: Color.fromARGB(255, 93, 152, 240),
-            borderRadius: BorderRadius.all(
+          decoration: BoxDecoration(
+            color: kPrimaryColor,
+            borderRadius: const BorderRadius.all(
               Radius.circular(
                 defaultRounded,
               ),
@@ -33,16 +30,14 @@ class CustomTile extends StatelessWidget {
               height: 100,
               child: Row(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(defaultRounded),
-                    child: Padding(
-                      padding: const EdgeInsets.all(defaultPadding),
-                      child: Image.network(
+                  Padding(
+                    padding: const EdgeInsets.all(defaultPadding),
+                    child: CircleAvatar(
+                      radius: 30.0,
+                      backgroundImage: NetworkImage(
                         pokemonEntity.image!,
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
                       ),
+                      backgroundColor: Colors.transparent,
                     ),
                   ),
                   const SizedBox(
@@ -51,15 +46,23 @@ class CustomTile extends StatelessWidget {
                   Padding(
                     padding:
                         const EdgeInsets.symmetric(vertical: defaultPadding),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          pokemonEntity.name!,
-                          style: const TextStyle(fontSize: 20),
+                    child: Padding(
+                      padding: const EdgeInsets.all(defaultPadding),
+                      child: Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              pokemonEntity.name!,
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                            const SizedBox(
+                              height: defaultSizedBox,
+                            ),
+                            Text('#${pokemonEntity.number!}'),
+                          ],
                         ),
-                        Text(pokemonEntity.number!),
-                      ],
+                      ),
                     ),
                   ),
                 ],

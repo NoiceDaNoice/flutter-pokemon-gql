@@ -17,9 +17,10 @@ class Api {
             """
 
 query {
-  pokemon(id:"UG9rZW1vbjowMDE",name:"Bulbasaur") {
+  pokemon(id:"$id",name:"$name") {
     id
     number
+    name
     weight {
       minimum
       maximum
@@ -49,6 +50,8 @@ query {
     maxCP
     evolutions {
       id
+      image
+      name
     }
     evolutionRequirements {
       amount

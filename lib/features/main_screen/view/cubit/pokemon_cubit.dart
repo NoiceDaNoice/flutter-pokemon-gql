@@ -11,16 +11,17 @@ class PokemonCubit extends Cubit<PokemonState> {
 
   List<PokemonEntity>? list = [];
   bool max = false;
-  void getAllPokemon({int first = 10}) async {
+  void getAllPokemon({int first = 10, bool refresh = false}) async {
     try {
       emit(PokemonLoading());
+      if (refresh) list!.clear();
       var response = (list!.length < 10)
           ? await Api().getPokemons(first: first)
           : await Api().getPokemons(first: list!.length + first);
       list!.clear();
       list!.addAll(response);
       if (list!.length % 10 != 0) max = true;
-      emit(PokemonSuccess(list!,max));
+      emit(PokemonSuccess(list!, max));
     } catch (e) {
       emit(PokemonFailed(e.toString()));
     }

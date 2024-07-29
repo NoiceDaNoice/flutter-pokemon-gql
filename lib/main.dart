@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_pokemon_gql/common/theme.dart';
 import 'package:flutter_pokemon_gql/features/detail_screen/view/detail_page.dart';
 import 'package:flutter_pokemon_gql/features/main_screen/view/main_screen.dart';
 
@@ -15,7 +15,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Pokemon',
+      theme: ThemeData(
+        primaryColor: kPrimaryColor,
+      ),
       debugShowCheckedModeBanner: false,
       routes: {
         '/': (context) => const SplashScreen(),
