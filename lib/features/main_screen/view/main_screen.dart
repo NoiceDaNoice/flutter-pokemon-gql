@@ -32,6 +32,12 @@ class _MainPageState extends State<MainPage> {
   }
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Widget listPokemon() {
       return BlocProvider(
