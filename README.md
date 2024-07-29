@@ -2,5 +2,11 @@
 
 - Clone repository
 - Open android emulator
-- Run flutter pub get in terminal
-- Run flutter run in terminal
+- Get the lib
+```console
+flutter pub get
+```
+- Run the app
+```console
+flutter run
+```
