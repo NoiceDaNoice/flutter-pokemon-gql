@@ -50,21 +50,6 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ),
               );
-              // return Center(
-              //   child: Column(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     crossAxisAlignment: CrossAxisAlignment.center,
-              //     children: [
-              //       const Text('Failed to load pokemon.'),
-              //       TextButton(
-              //         onPressed: () => _pokemonCubit.getAllPokemon(),
-              //         child: const Text(
-              //           'Retry',
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // );
             }
           },
           builder: (context, state) {
